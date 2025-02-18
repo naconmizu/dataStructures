@@ -1,7 +1,7 @@
 package datastructures
 
 import "fmt"
-
+ 
 // Node representa um elemento da lista encadeada, armazenando um valor inteiro e um ponteiro para o próximo nó.
 type Node struct {
 	Value int
@@ -15,6 +15,14 @@ type LinkedList struct {
 }
 
 // Add adiciona um novo nó ao final da lista encadeada.
+//
+// Parâmetros:
+//   - x: O valor inteiro a ser armazenado no novo nó.
+//
+// Exemplo de uso:
+//   list := LinkedList{}
+//   list.Add(10)
+//   list.Add(20) // Lista: 10 -> 20 -> nil
 func (T *LinkedList) Add(x int) {
 	newNode := &Node{Value: x}
 
@@ -32,6 +40,9 @@ func (T *LinkedList) Add(x int) {
 }
 
 // Print exibe os elementos da lista encadeada no formato "valor -> valor -> ... -> nil".
+//
+// Exemplo de saída:
+//   list.Print() // Saída: 10 -> 20 -> nil
 func (T *LinkedList) Print() {
 	current := T.Initial
 	for current != nil {
@@ -42,6 +53,14 @@ func (T *LinkedList) Print() {
 }
 
 // RemoveLast remove o último elemento da lista encadeada.
+//
+// Caso a lista esteja vazia, a função não faz nada.
+//
+// Exemplo de uso:
+//   list := LinkedList{}
+//   list.Add(10)
+//   list.Add(20)
+//   list.RemoveLast() // Remove 20, lista fica: 10 -> nil
 func (T *LinkedList) RemoveLast() {
 	if T.Initial == nil {
 		return
@@ -62,9 +81,46 @@ func (T *LinkedList) RemoveLast() {
 	T.Size--
 }
 
-// Get retorna o nó no índice especificado.
-// Se o índice for inválido, retorna nil.
-func (T *LinkedList) Get(index int) *Node {
+// Get retorna o valor do nó na posição especificada da lista encadeada.
+//
+// Parâmetros:
+//   - index: A posição do nó na lista encadeada. Deve estar dentro dos limites válidos.
+//
+// Retorna:
+//   - O valor do nó na posição especificada.
+//
+// Pânico:
+//   - Se a lista estiver vazia (T.Initial == nil).
+//   - Se o índice for negativo ou maior ou igual ao tamanho da lista (fora dos limites).
+//
+// Exemplo de uso:
+//   list := LinkedList{}
+//   list.Add(10)
+//   list.Add(20)
+//   fmt.Println(list.Get(1)) // Saída: 20
+func (T *LinkedList) Get(index int) int {
+	if T.Initial == nil || index < 0 || index >= T.Size {
+		panic("out of bounds")
+	}
+
+	return T.GetNode(index).Value
+}
+
+// GetNode retorna o nó no índice especificado.
+//
+// Parâmetros:
+//   - index: A posição do nó na lista encadeada. Deve estar dentro dos limites válidos.
+//
+// Retorna:
+//   - O ponteiro para o nó no índice especificado.
+//   - Retorna nil se o índice for inválido.
+//
+// Exemplo de uso:
+//   node := list.GetNode(1)
+//   if node != nil {
+//       fmt.Println(node.Value) // Exibe o valor do nó
+//   }
+func (T *LinkedList) GetNode(index int) *Node {
 	if T.Initial == nil || index < 0 || index >= T.Size {
 		return nil
 	}
@@ -74,4 +130,31 @@ func (T *LinkedList) Get(index int) *Node {
 		current = current.Next
 	}
 	return current
+}
+
+ 
+// Get retorna o valor do nó na posição especificada da lista encadeada.
+//
+// Parâmetros:
+//   - index: A posição do nó na lista encadeada. Deve estar dentro dos limites válidos.
+//
+// Retorna:
+//   - O valor do nó na posição especificada.
+//
+// Pânico:
+//   - Se a lista estiver vazia (T.Initial == nil).
+//   - Se o índice for negativo ou maior ou igual ao tamanho da lista (fora dos limites).
+//
+// Exemplo de uso:
+//   list := LinkedList{}
+//   list.Append(10)
+//   list.Append(20)
+//   fmt.Println(list.Get(1)) // Saída: 20
+//
+func (T *LinkedList) Get(index int) int {
+	if T.Initial == nil || index < 0 || index >= T.Size {
+		panic("out of bounds")
+	}
+
+	return T.GetNode(index).Value
 }
