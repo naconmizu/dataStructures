@@ -133,28 +133,3 @@ func (T *LinkedList) GetNode(index int) *Node {
 }
 
  
-// Get retorna o valor do nó na posição especificada da lista encadeada.
-//
-// Parâmetros:
-//   - index: A posição do nó na lista encadeada. Deve estar dentro dos limites válidos.
-//
-// Retorna:
-//   - O valor do nó na posição especificada.
-//
-// Pânico:
-//   - Se a lista estiver vazia (T.Initial == nil).
-//   - Se o índice for negativo ou maior ou igual ao tamanho da lista (fora dos limites).
-//
-// Exemplo de uso:
-//   list := LinkedList{}
-//   list.Append(10)
-//   list.Append(20)
-//   fmt.Println(list.Get(1)) // Saída: 20
-//
-func (T *LinkedList) Get(index int) int {
-	if T.Initial == nil || index < 0 || index >= T.Size {
-		panic("out of bounds")
-	}
-
-	return T.GetNode(index).Value
-}
