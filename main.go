@@ -86,6 +86,50 @@ func (T *LinkedList) RemoveLast() {
 	T.Size--
 }
 
+// Remove remove o nó da lista ligada no índice especificado.
+//
+// Parâmetros:
+//   - index (int): posição do elemento a ser removido (base 0).
+//
+// Comportamento:
+//   - Se a lista não estiver inicializada, exibe uma mensagem e retorna.
+//   - Se o índice for 0, atualiza a cabeça da lista para o próximo nó.
+//   - Percorre a lista até encontrar o elemento anterior ao índice desejado.
+//   - Ajusta os ponteiros para excluir o elemento e decrementa o tamanho da lista.
+//
+// Complexidade: O(n), onde n é o índice do elemento a ser removido.
+
+func (T *LinkedList) Remove(index int) {
+	if index < 0 || index >= T.Size {
+		fmt.Print("Index out of bounds")
+		return
+	}
+	
+	
+	if T.Initial == nil {
+		fmt.Print("LinkedList not initialized")
+    return
+  }
+
+  if index == 0 {
+    T.Initial = T.Initial.Next
+    T.Size--
+    return
+  }
+
+  current := T.Initial
+  for i := 0; i < index-1 && current.Next != nil; i++ {
+    current = current.Next
+  }
+
+  if current.Next == nil {
+    return
+  }
+
+  current.Next = current.Next.Next
+  T.Size--
+}
+
 // Get retorna o valor do nó na posição especificada da lista encadeada.
 //
 // Parâmetros:
@@ -105,8 +149,14 @@ func (T *LinkedList) RemoveLast() {
 //	list.Add(20)
 //	fmt.Println(list.Get(1)) // Saída: 20
 func (T *LinkedList) Get(index int) int {
-	if T.Initial == nil || index < 0 || index >= T.Size {
-		panic("out of bounds")
+	if T.Initial == nil {
+		fmt.Print("array not initialized")
+		return 0 
+	}
+	
+	if  index < 0 || index >= T.Size {
+		fmt.Println("out of bounds")
+		return 0
 	}
 
 	return T.GetNode(index).Value
@@ -128,7 +178,13 @@ func (T *LinkedList) Get(index int) int {
 //	    fmt.Println(node.Value) // Exibe o valor do nó
 //	}
 func (T *LinkedList) GetNode(index int) *Node {
-	if T.Initial == nil || index < 0 || index >= T.Size {
+	if T.Initial == nil {
+
+		return nil
+	}
+
+	if index < 0 || index >= T.Size {
+		fmt.Println("out of bounds")	
 		return nil
 	}
 
@@ -146,7 +202,7 @@ func (T *LinkedList) GetNode(index int) *Node {
 //   - []int: um slice contendo os valores da lista ligada na mesma ordem.
 //
 // Complexidade: O(n), onde n é o tamanho da lista.
-func (T *LinkedList) toArray() []int {
+func (T *LinkedList) ToArray() []int {
 	if T.Initial == nil {
 		fmt.Print("linkedlist not initialized")
 		return nil
@@ -159,4 +215,3 @@ func (T *LinkedList) toArray() []int {
 	}
 	return arr
 }
-
